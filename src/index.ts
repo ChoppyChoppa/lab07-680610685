@@ -4,8 +4,8 @@ import express, { type Request, type Response } from "express";
 import morgan from "morgan";
 
 // import database
-import { students } from "./db/db";
-import { type Student, type Course } from "./libs/types";
+import { students } from "../src/db/db.ts";
+import { type Student, type Course } from "../src/libs/types.ts";
 import {
   zStudentDeleteBody,
   zStudentPostBody,
@@ -33,7 +33,7 @@ app.get("/students", (req: Request, res: Response) => {
 
     if (studentId && program) {
       let filtered_students = students.filter(
-        (student) =>
+        (student: any) =>
           student.studentId === studentId && student.program === program,
       );
       return res.json({
@@ -42,7 +42,7 @@ app.get("/students", (req: Request, res: Response) => {
       });
     } else if (studentId) {
       let filtered_students = students.filter(
-        (student) => student.studentId === studentId,
+        (student: any) => student.studentId === studentId,
       );
       return res.json({
         ok: true,
@@ -50,7 +50,7 @@ app.get("/students", (req: Request, res: Response) => {
       });
     } else if (program) {
       let filtered_students = students.filter(
-        (student) => student.program === program,
+        (student: any) => student.program === program,
       );
       return res.json({
         ok: true,
@@ -97,7 +97,7 @@ app.post("/students", (req: Request, res: Response) => {
 
     //check duplicate studentId
     const found = students.find(
-      (student) => student.studentId === body.studentId,
+      (student: any) => student.studentId === body.studentId,
     );
     if (found) {
       return res.json({
@@ -144,7 +144,7 @@ app.put("/students", (req: Request, res: Response) => {
 
     //check duplicate studentId
     const foundIndex = students.findIndex(
-      (student) => student.studentId === body.studentId,
+      (student: any) => student.studentId === body.studentId,
     );
 
     if (foundIndex === -1) {
@@ -188,7 +188,7 @@ app.delete("/students", (req: Request, res: Response) => {
     }
 
     const foundIndex = students.findIndex(
-      (student) => student.studentId === body.studentId,
+      (student: any) => student.studentId === body.studentId,
     );
 
     if (foundIndex === -1) {
